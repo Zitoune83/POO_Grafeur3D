@@ -1,6 +1,5 @@
 #include "widget.h"
 
-
 #include <QApplication>
 
 #include <QtDataVisualization/Q3DSurface>
@@ -17,9 +16,10 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     Modele modele;
     View object;
+    Constante c(10);
     QWidget *container = QWidget::createWindowContainer(object.getGraph());
 
-    object.update(modele.feedGraph());
+    object.update(modele.feedGraph(c));
 
     container->show();
 

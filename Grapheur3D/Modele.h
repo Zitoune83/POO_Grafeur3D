@@ -2,6 +2,7 @@
 #define MODELE_H
 
 #include "View.h"
+#include "Constante.h"
 
 #include <QtDataVisualization/Q3DSurface>
 using namespace QtDataVisualization;
@@ -16,7 +17,7 @@ public:
     ~Modele();
     void Set();          //
     void Get();          //
-    QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
+    QSurface3DSeries* feedGraph(Constante c);   //Fournit un tableau de points à l' object Q3Dsurface
     void SetExpression();//Met à jour l' expresion
 
 

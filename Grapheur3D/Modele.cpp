@@ -1,12 +1,15 @@
 #include "Modele.h"
+#include "Constante.h"
 #include "View.h"
 
 #include <QtDataVisualization/Q3DSurface>
+#include <QtCore/qmath.h>
 using namespace QtDataVisualization;
 
-const int sample = 50;            //nb echantillon en X et Y
-const float sampleMin = -8.0f;   //Domaine de def
-const float sampleMax = 8.0f;   //Domaine de def
+const int sampleCountX = 50;
+const int sampleCountZ = 50;
+const float sampleMin = -18.0f;
+const float sampleMax = 18.0f;
 
 Modele::Modele(): expression(0){
 
@@ -18,31 +21,38 @@ Modele::~Modele(){
 
 void Modele::Set(){};            //
 void Modele::Get(){};            //
-QSurface3DSeries* Modele::feedGraph( ){
+QSurface3DSeries* Modele::feedGraph(Constante c){
 
 
+    float stepX = (sampleMax - sampleMin) / float(sampleCountX - 1);
+    float stepZ = (sampleMax - sampleMin) / float(sampleCountZ - 1);
 
-//Generere des data en fct d une expression
+    QSurfaceDataArray *dataArray = new QSurfaceDataArray;
+    dataArray->reserve(sampleCountZ);
 
-    //OK************
-    //m_graph->setFlags(m_graph->flags() ^ Qt::FramelessWindowHint);
-    QSurfaceDataArray *data = new QSurfaceDataArray;
-    QSurfaceDataRow *dataRow1 = new QSurfaceDataRow;
-    QSurfaceDataRow *dataRow2 = new QSurfaceDataRow;
+    for (int i = 0 ; i < sampleCountZ ; i++) {
+        QSurfaceDataRow *newRow = new QSurfaceDataRow(sampleCountX);
+        // Keep values within range bounds, since just adding step can cause minor drift due
+        // to the rounding errors.
+        float z = qMin(sampleMax, (i * stepZ + sampleMin));
 
-    *dataRow1 << QVector3D(0.0f, 0.1f, 0.5f) << QVector3D(1.0f, 0.5f, 0.5f);
-    *dataRow2 << QVector3D(0.0f, 1.8f, 1.0f) << QVector3D(1.0f, 8.2f, 9.0f);
-    *data << dataRow1 << dataRow2;
+        int index = 0;
+        for (int j = 0; j < sampleCountX; j++) {
+            float x = qMin(sampleMax, (j * stepX + sampleMin));
+            //float R = qSqrt(z * z + x * x) + 0.01f;
+            //float y = (qSin(R) / R + 0.24f) * 1.61f;
+            float y = c.calculer();
+            (*newRow)[index++].setPosition(QVector3D(x, y, z));
+        }
+        *dataArray << newRow;
+    }
 
-    //m_graph->addSeries(m_surfaceSeries);
     QSurface3DSeries *series = new QSurface3DSeries;
-    series->dataProxy()->resetArray(data);
+     series->dataProxy()->resetArray(dataArray);
+
     return series;
 
-
-};      //Fournit un tableau de points à l' object Q3Dsurface
-
-
+}
 
 
 void Modele::SetExpression(){};  //Met à jour l' expresion
