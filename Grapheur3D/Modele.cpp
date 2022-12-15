@@ -11,8 +11,8 @@ using namespace QtDataVisualization;
 //const float sampleMin = -18.0f;
 //const float sampleMax = 18.0f;
 
-Modele::Modele(): m_sampleCountX(50), m_sampleCountZ(50), m_sampleMin(-18.0f), m_sampleMax(18.0f), m_c(5.0f) {
-
+//Modele::Modele(): m_sampleCountX(50), m_sampleCountZ(50), m_sampleMin(-18.0f), m_sampleMax(18.0f), m_c(5.0f) {
+Modele::Modele(): m_sampleCountX(50), m_sampleCountZ(50), m_sampleMin(-18.0f), m_sampleMax(18.0f), m_exp(nullptr) {
 };
 
 Modele::~Modele(){
@@ -36,9 +36,17 @@ void Modele::SetSampleMax(float max){
     m_sampleMax = max;
 }
 
-void Modele::SetConstante(Constante c){
-    m_c = c;
+//void Modele::SetConstante(Constante c){
+//    m_c = c;
+//}
+
+
+void Modele::SetExpression(Expression* exp){
+    m_exp = exp;
 }
+
+
+
 
 QSurface3DSeries* Modele::feedGraph(){
 
@@ -61,8 +69,8 @@ QSurface3DSeries* Modele::feedGraph(){
             //float R = qSqrt(z * z + x * x) + 0.01f;
             //float y = (qSin(R) / R + 0.24f) * 1.61f;
             //float y = c.calculer();
-            //float y = x*x;
-            float y = m_c.calculer();
+            //float y = z*x;
+            float y = m_exp->calculer();
             (*newRow)[index++].setPosition(QVector3D(x, y, z));
         }
         *dataArray << newRow;

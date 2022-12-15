@@ -15,7 +15,8 @@ private:
     int m_sampleCountZ;
     float m_sampleMin;
     float m_sampleMax;
-    Constante m_c;
+    //Constante m_c;
+    Expression* m_exp;
 
 public:
     Modele();
@@ -27,6 +28,7 @@ public:
     void SetSampleMin(float min);
     void SetSampleMax(float max);
     void SetConstante(Constante c);
+    void SetExpression(Expression* exp);
     //void Get();          //
     QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
 //    void SetExpression();//Met à jour l' expresion
