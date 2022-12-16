@@ -47,6 +47,8 @@ void Model::setExpression(Expression* exp){
 
 QSurface3DSeries* Model::feedGraph(){
 
+
+
     float stepX = (m_sampleMax - m_sampleMin) / float(m_sampleCountX - 1);
     float stepZ = (m_sampleMax - m_sampleMin) / float(m_sampleCountZ - 1);
 
@@ -81,5 +83,6 @@ QSurface3DSeries* Model::feedGraph(){
 
 void Model::testMemory()
 {
+    //m_exp->afficher_classique();
     return;
 }
