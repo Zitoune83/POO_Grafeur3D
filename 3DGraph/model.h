@@ -1,7 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include "classes/Constante.h"
+#include "classes/Expression.h"
 #include <QtDataVisualization/Q3DSurface>
 #include <QObject>
 
@@ -18,6 +18,7 @@ private:
     float m_sampleMin;
     float m_sampleMax;
     Expression* m_exp;
+    std::map<std::string, float>& var_map;
 
 public:
     Model();

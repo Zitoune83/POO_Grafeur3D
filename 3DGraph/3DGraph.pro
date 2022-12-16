@@ -16,6 +16,7 @@ SOURCES += \
     classes/Multiplication.cpp \
     classes/OperateurBinaire.cpp \
     classes/Soustraction.cpp \
+    classes/Variable.cpp \
     main.cpp \
     model.cpp \
     view.cpp
@@ -28,6 +29,7 @@ HEADERS += \
     classes/Multiplication.h \
     classes/OperateurBinaire.h \
     classes/Soustraction.h \
+    classes/Variable.h \
     model.h \
     view.h
 

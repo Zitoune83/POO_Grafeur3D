@@ -1,4 +1,5 @@
 #include "model.h"
+#include "classes/Variable.h"
 #include "classes/Addition.h"
 #include "classes/Multiplication.h"
 #include <QtDataVisualization/Q3DSurface>
@@ -7,7 +8,15 @@
 using namespace QtDataVisualization;
 
 //Modele::Modele(): m_sampleCountX(50), m_sampleCountZ(50), m_sampleMin(-18.0f), m_sampleMax(18.0f), m_c(5.0f) {
-Model::Model(): QObject(), m_sampleCountX(50), m_sampleCountZ(50), m_sampleMin(-18.0f), m_sampleMax(18.0f), m_exp(nullptr) {
+Model::Model()
+    : QObject(),
+      m_sampleCountX(50),
+      m_sampleCountZ(50),
+      m_sampleMin(-18.0f),
+      m_sampleMax(18.0f),
+      m_exp(nullptr) ,
+      var_map(Variable::init())
+{
 };
 
 Model::~Model(){
@@ -16,12 +25,10 @@ Model::~Model(){
 
 void Model::init()
 {
-    Constante c1 = 0;
-    Constante c2 = 0;
-    Constante c3 = 0;
-    Multiplication mul(&c2, &c3);
-    Addition add(&c1, &mul);
-    setExpression(&add);
+    Variable x("x", var_map, 0);
+    Variable y("y", var_map, 0);
+    Multiplication mul(&x, &x);
+    setExpression(&mul);
 }
 
 void Model::setSampleX(int sample){
@@ -52,8 +59,6 @@ void Model::setExpression(Expression* exp){
 
 QSurface3DSeries* Model::feedGraph(){
 
-
-
     float stepX = (m_sampleMax - m_sampleMin) / float(m_sampleCountX - 1);
     float stepZ = (m_sampleMax - m_sampleMin) / float(m_sampleCountZ - 1);
 
@@ -73,6 +78,8 @@ QSurface3DSeries* Model::feedGraph(){
             //float y = (qSin(R) / R + 0.24f) * 1.61f;
             //float y = c.calculer();
             //float y = z*x;
+            var_map["x"] = x;
+            var_map["y"] = z;
             float y = m_exp->calculer();
             (*newRow)[index++].setPosition(QVector3D(x, y, z));
         }
