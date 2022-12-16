@@ -24,13 +24,13 @@ public:
     ~Model();
 
     void init();
+    QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
+
+public slots:
     void setSampleX(int sample);
     void setSampleZ(int sample);
     void setSampleMin(float min);
     void setSampleMax(float max);
-    QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
-
-public slots:
     void setExpression(Expression* exp);
     void testMemory();
 

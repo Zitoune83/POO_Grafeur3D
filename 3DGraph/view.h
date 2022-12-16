@@ -9,6 +9,7 @@
 #include <QtDataVisualization/Q3DSurface>
 #include <QtDataVisualization/QSurface3DSeries>
 #include <QPushButton>
+#include <QSlider>
 
 using namespace QtDataVisualization;
 
@@ -31,17 +32,27 @@ private:
 
     QPushButton test_button;
 
+    QSlider point_X;
+    QSlider point_Z;
+
+    QSlider size_min;
+    QSlider size_max;
+
     static const QString LABEL_EXPR;
     static const QString LABEL_EDIT_C1;
     static const QString LABEL_EDIT_C2;
     static const QString LABEL_EDIT_C3;
+
 
 public:
     View(QWidget *parent = nullptr);
     ~View();
 
     QPushButton* getTestButton();
-
+    QSlider* getsliderpoint_x();
+    QSlider* getsliderpoint_z();
+    QSlider* getslidersize_min();
+    QSlider* getslidersize_max();
     static constexpr int WIDTH = 1280;
     static constexpr int HEIGHT = 900;
     static constexpr int GRAPH_STRETCH = 4;

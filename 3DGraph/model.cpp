@@ -26,15 +26,20 @@ void Model::init()
 
 void Model::setSampleX(int sample){
     m_sampleCountX = sample;
+    this->feedGraph();
+
 }         //
 void Model::setSampleZ(int sample){
     m_sampleCountZ = sample;
+
 }
 void Model::setSampleMin(float min){
     m_sampleMin = min;
+
 }
 void Model::setSampleMax(float max){
     m_sampleMax = max;
+
 }
 
 void Model::setExpression(Expression* exp){

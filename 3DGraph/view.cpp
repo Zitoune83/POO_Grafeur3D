@@ -8,9 +8,15 @@ const QString View::LABEL_EDIT_C1 = QString::fromStdString("C1 = ");
 const QString View::LABEL_EDIT_C2 = QString::fromStdString("C2 = ");
 const QString View::LABEL_EDIT_C3 = QString::fromStdString("C3 = ");
 
+
 View::View(QWidget *parent)
     : QWidget(parent),
-      base_layout(this)
+      base_layout(this),
+      point_X(Qt::Horizontal),
+      point_Z(Qt::Horizontal),
+      size_min(Qt::Horizontal),
+      size_max(Qt::Horizontal)
+
 {
     graph_container = createWindowContainer(&graph);
 
@@ -23,7 +29,27 @@ View::View(QWidget *parent)
     controls_layout.addRow(View::LABEL_EDIT_C1, &line_edit_c1);
     controls_layout.addRow(View::LABEL_EDIT_C2, &line_edit_c2);
     controls_layout.addRow(View::LABEL_EDIT_C3, &line_edit_c3);
-    controls_layout.addWidget(&test_button);
+
+    point_X.setMinimum(2);
+    point_X.setMaximum(50);
+    point_X.setTickInterval(1);
+    controls_layout.addWidget(&point_X);
+
+    point_Z.setMinimum(2);
+    point_Z.setMaximum(50);
+    point_Z.setTickInterval(1);
+    controls_layout.addWidget(&point_Z);
+
+    size_min.setMinimum(-50);
+    size_min.setMaximum(0);
+    size_min.setTickInterval(1);
+    controls_layout.addWidget(&size_min);
+
+    size_max.setMinimum(0);
+    size_max.setMaximum(50);
+    size_max.setTickInterval(1);
+    controls_layout.addWidget(&size_max);
+
 
     base_layout.addWidget(graph_container, View::GRAPH_STRETCH);
     base_layout.addLayout(&controls_layout, View::CONTROLS_STRETCH);
@@ -39,6 +65,23 @@ View::~View()
 {
 }
 
+QSlider* View::getsliderpoint_x()
+{
+    return &point_X;
+}
+
+QSlider* View::getsliderpoint_z()
+{
+    return &point_Z;
+}
+QSlider* View::getslidersize_min()
+{
+    return &size_min;
+}
+QSlider* View::getslidersize_max()
+{
+    return &size_max;
+}
 void View::generateExpression()
 {
     Constante c1 = line_edit_c1.text().toFloat();
