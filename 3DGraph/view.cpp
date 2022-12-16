@@ -52,7 +52,7 @@ void View::generateExpression()
 void View::updateGraph(QSurface3DSeries* series)
 {
     if (!graph.seriesList().isEmpty())
-        graph.removeSeries(graph.seriesList().first());
+        graph.removeSeries(graph.seriesList().constFirst());
     graph.addSeries(series);
 }
 
