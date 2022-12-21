@@ -1,7 +1,4 @@
 #include "view.h"
-#include "classes/Constante.h"
-#include "classes/Addition.h"
-#include "classes/Multiplication.h"
 
 const QString View::LABEL_EXPR = QString::fromStdString("Expr = ");
 const QString View::LABEL_SAMPLE_X = QString::fromStdString("Sample on X: ");
