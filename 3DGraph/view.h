@@ -50,6 +50,9 @@ public:
     static constexpr int HEIGHT = 900;
     static constexpr int GRAPH_STRETCH = 4;
     static constexpr int CONTROLS_STRETCH = 1;
+    static QString LABEL_AXE_X;
+    static QString LABEL_AXE_Y;
+    static QString LABEL_AXE_Z;
 
 public slots:
     void updateGraph(QSurface3DSeries* series);

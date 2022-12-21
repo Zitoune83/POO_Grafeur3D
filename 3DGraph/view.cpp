@@ -4,6 +4,9 @@
 #include "classes/Multiplication.h"
 
 const QString View::LABEL_EXPR = QString::fromStdString("Expr = ");
+QString View::LABEL_AXE_X = QString::fromStdString("Axis X");
+QString View::LABEL_AXE_Y = QString::fromStdString("Axis Y");
+QString View::LABEL_AXE_Z = QString::fromStdString("Axis Z");
 
 
 View::View(QWidget *parent)
@@ -73,9 +76,16 @@ QSlider* View::getslidersize_max()
 
 void View::updateGraph(QSurface3DSeries* series)
 {
+
     if (!graph.seriesList().isEmpty())
         graph.removeSeries(graph.seriesList().constFirst());
     graph.addSeries(series);
+    graph.axisX()->setTitle(LABEL_AXE_X);
+    graph.axisY()->setTitle(LABEL_AXE_Y);
+    graph.axisZ()->setTitle(LABEL_AXE_Z);
+    graph.axisX()->setTitleVisible(true);
+    graph.axisY()->setTitleVisible(true);
+    graph.axisZ()->setTitleVisible(true);
 }
 
 void View::updateLabelExpr(const QString& text)
