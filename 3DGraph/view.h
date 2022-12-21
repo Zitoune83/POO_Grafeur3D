@@ -26,10 +26,6 @@ private:
 
     QLabel label_expr;
 
-    QLineEdit line_edit_c1;
-    QLineEdit line_edit_c2;
-    QLineEdit line_edit_c3;
-
     QPushButton test_button;
 
     QSlider point_X;
@@ -39,9 +35,6 @@ private:
     QSlider size_max;
 
     static const QString LABEL_EXPR;
-    static const QString LABEL_EDIT_C1;
-    static const QString LABEL_EDIT_C2;
-    static const QString LABEL_EDIT_C3;
 
 
 public:
@@ -58,14 +51,8 @@ public:
     static constexpr int GRAPH_STRETCH = 4;
     static constexpr int CONTROLS_STRETCH = 1;
 
-private slots:
-    void generateExpression();
-
 public slots:
     void updateGraph(QSurface3DSeries* series);
     void updateLabelExpr(const QString& text);
-
-signals:
-    void expressionTyped(Expression* exp);
 };
 #endif // VIEW_H

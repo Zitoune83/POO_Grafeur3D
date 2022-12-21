@@ -4,9 +4,6 @@
 #include "classes/Multiplication.h"
 
 const QString View::LABEL_EXPR = QString::fromStdString("Expr = ");
-const QString View::LABEL_EDIT_C1 = QString::fromStdString("C1 = ");
-const QString View::LABEL_EDIT_C2 = QString::fromStdString("C2 = ");
-const QString View::LABEL_EDIT_C3 = QString::fromStdString("C3 = ");
 
 
 View::View(QWidget *parent)
@@ -21,14 +18,8 @@ View::View(QWidget *parent)
     graph_container = createWindowContainer(&graph);
 
     label_expr.setText(QString::fromStdString(""));
-    line_edit_c1.setText(QString::fromStdString("0"));
-    line_edit_c2.setText(QString::fromStdString("0"));
-    line_edit_c3.setText(QString::fromStdString("0"));
 
     controls_layout.addRow(View::LABEL_EXPR, &label_expr);
-    controls_layout.addRow(View::LABEL_EDIT_C1, &line_edit_c1);
-    controls_layout.addRow(View::LABEL_EDIT_C2, &line_edit_c2);
-    controls_layout.addRow(View::LABEL_EDIT_C3, &line_edit_c3);
 
     point_X.setMinimum(2);
     point_X.setMaximum(50);
@@ -56,9 +47,6 @@ View::View(QWidget *parent)
 
     resize(View::WIDTH, View::HEIGHT);
 
-    QObject::connect(&line_edit_c1, &QLineEdit::returnPressed, this, &View::generateExpression);
-    QObject::connect(&line_edit_c2, &QLineEdit::returnPressed, this, &View::generateExpression);
-    QObject::connect(&line_edit_c3, &QLineEdit::returnPressed, this, &View::generateExpression);
 }
 
 View::~View()
@@ -81,15 +69,6 @@ QSlider* View::getslidersize_min()
 QSlider* View::getslidersize_max()
 {
     return &size_max;
-}
-void View::generateExpression()
-{
-    Constante c1 = line_edit_c1.text().toFloat();
-    Constante c2 = line_edit_c2.text().toFloat();
-    Constante c3 = line_edit_c3.text().toFloat();
-    Multiplication mul(&c2, &c3);
-    Addition add(&c1, &mul);
-    emit expressionTyped(&add);
 }
 
 void View::updateGraph(QSurface3DSeries* series)

@@ -18,21 +18,23 @@ private:
     float m_sampleMin;
     float m_sampleMax;
     Expression* m_exp;
-    std::map<std::string, float>& var_map;
+    std::map<std::string, float>* var_map;
 
 public:
     Model();
     ~Model();
 
-    void init();
+    static void setExpression(Model& m);
     QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
+
+private:
+    void setExpression();
 
 public slots:
     void setSampleX(int sample);
     void setSampleZ(int sample);
     void setSampleMin(float min);
     void setSampleMax(float max);
-    void setExpression(Expression* exp);
     void testMemory();
 
 signals:

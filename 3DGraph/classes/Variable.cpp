@@ -32,7 +32,7 @@ map<string, float> &Variable::init() {
 
 std::string Variable::toString()
 {
-    return std::to_string(get_valeur());
+    return m_nom;
 }
 
 void Variable::afficher_classique(ostream& os) {

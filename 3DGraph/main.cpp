@@ -6,7 +6,6 @@ void connect(Model& m, View& v)
 {
     QObject::connect(&m, &Model::seriesUpdated, &v, &View::updateGraph);
     QObject::connect(&m, &Model::expressionUpdated, &v, &View::updateLabelExpr);
-    QObject::connect(&v, &View::expressionTyped, &m, &Model::setExpression);
     QPushButton* test_button = v.getTestButton();
     QSlider* pointX = v.getsliderpoint_x();
     QSlider* pointZ = v.getsliderpoint_z();
@@ -18,7 +17,7 @@ void connect(Model& m, View& v)
     QObject::connect(size_min,&QSlider::sliderMoved,&m,&Model::setSampleMin);
     QObject::connect(size_max,&QSlider::sliderMoved,&m,&Model::setSampleMax);
 
-    m.init();
+    Model::setExpression(m);
 }
 
 void connect(View& v, Model& m)

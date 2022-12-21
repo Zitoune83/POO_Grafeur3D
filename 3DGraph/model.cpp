@@ -14,8 +14,7 @@ Model::Model()
       m_sampleCountZ(50),
       m_sampleMin(-18.0f),
       m_sampleMax(18.0f),
-      m_exp(nullptr) ,
-      var_map(Variable::init())
+      m_exp(nullptr)
 {
 };
 
@@ -23,37 +22,37 @@ Model::~Model(){
 
 };
 
-void Model::init()
-{
-    Variable x("x", var_map, 0);
-    Variable y("y", var_map, 0);
-    Multiplication mul(&x, &x);
-    setExpression(&mul);
-}
-
 void Model::setSampleX(int sample){
     m_sampleCountX = sample;
     this->feedGraph();
-
-}         //
+}
 void Model::setSampleZ(int sample){
     m_sampleCountZ = sample;
-
+    this->feedGraph();
 }
 void Model::setSampleMin(float min){
     m_sampleMin = min;
-
+    this->feedGraph();
 }
 void Model::setSampleMax(float max){
     m_sampleMax = max;
-
+    this->feedGraph();
 }
 
-void Model::setExpression(Expression* exp){
-    m_exp = exp;
-    QSurface3DSeries* series = feedGraph();
-    QString text = QString::fromStdString(exp->toString());
-    emit seriesUpdated(series);
+void Model::setExpression(Model& m)
+{
+    static std::map<string, float> var_map = Variable::init();
+    static Variable x("x", var_map, 0);
+    static Variable y("y", var_map, 0);
+    static Multiplication mul(&x, &x);
+    m.var_map = &var_map;
+    m.m_exp = &mul;
+    m.setExpression();
+}
+
+void Model::setExpression(){
+    feedGraph();
+    QString text = QString::fromStdString(m_exp->toString());
     emit expressionUpdated(text);
 }
 
@@ -78,8 +77,8 @@ QSurface3DSeries* Model::feedGraph(){
             //float y = (qSin(R) / R + 0.24f) * 1.61f;
             //float y = c.calculer();
             //float y = z*x;
-            var_map["x"] = x;
-            var_map["y"] = z;
+            var_map->operator[]("x") = x;
+            var_map->operator[]("y") = z;
             float y = m_exp->calculer();
             (*newRow)[index++].setPosition(QVector3D(x, y, z));
         }
@@ -89,6 +88,7 @@ QSurface3DSeries* Model::feedGraph(){
     QSurface3DSeries *series = new QSurface3DSeries;
     series->dataProxy()->resetArray(dataArray);
 
+    emit seriesUpdated(series);
     return series;
 
 }
