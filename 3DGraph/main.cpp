@@ -17,7 +17,7 @@ void connect(Model& m, View& v)
     QObject::connect(size_min,&QSlider::sliderMoved,&m,&Model::setSampleMin);
     QObject::connect(size_max,&QSlider::sliderMoved,&m,&Model::setSampleMax);
 
-    Model::setExpression(m);
+    m.setExpression();
 }
 
 void connect(View& v, Model& m)

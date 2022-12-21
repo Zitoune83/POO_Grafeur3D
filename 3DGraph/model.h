@@ -24,11 +24,9 @@ public:
     Model();
     ~Model();
 
-    static void setExpression(Model& m);
+    void setExpression();
     QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
 
-private:
-    void setExpression();
 
 public slots:
     void setSampleX(int sample);

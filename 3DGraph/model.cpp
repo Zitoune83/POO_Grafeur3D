@@ -39,18 +39,14 @@ void Model::setSampleMax(float max){
     this->feedGraph();
 }
 
-void Model::setExpression(Model& m)
+void Model::setExpression()
 {
     static std::map<string, float> var_map = Variable::init();
     static Variable x("x", var_map, 0);
     static Variable y("y", var_map, 0);
     static Multiplication mul(&x, &x);
-    m.var_map = &var_map;
-    m.m_exp = &mul;
-    m.setExpression();
-}
-
-void Model::setExpression(){
+    this->var_map = &var_map;
+    this->m_exp = &mul;
     feedGraph();
     QString text = QString::fromStdString(m_exp->toString());
     emit expressionUpdated(text);
