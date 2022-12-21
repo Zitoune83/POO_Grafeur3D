@@ -1,7 +1,9 @@
 #include "model.h"
 #include "classes/Variable.h"
+#include "classes/Constante.h"
 #include "classes/Addition.h"
 #include "classes/Multiplication.h"
+#include "classes/Division.h"
 #include <QtDataVisualization/Q3DSurface>
 #include <QtCore/qmath.h>
 
@@ -43,10 +45,11 @@ void Model::setExpression()
 {
     static std::map<string, float> var_map = Variable::init();
     static Variable x("x", var_map, 0);
-    static Variable y("y", var_map, 0);
-    static Multiplication mul(&x, &x);
+    static Variable z("z", var_map, 0);
+    static Multiplication m(&x, &x);
+    static Multiplication e(&m, &z);
     this->var_map = &var_map;
-    this->m_exp = &mul;
+    this->m_exp = &e;
     feedGraph();
     QString text = QString::fromStdString(m_exp->toString());
     emit expressionUpdated(text);
@@ -74,7 +77,7 @@ QSurface3DSeries* Model::feedGraph(){
             //float y = c.calculer();
             //float y = z*x;
             var_map->operator[]("x") = x;
-            var_map->operator[]("y") = z;
+            var_map->operator[]("z") = z;
             float y = m_exp->calculer();
             (*newRow)[index++].setPosition(QVector3D(x, y, z));
         }

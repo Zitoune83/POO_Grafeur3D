@@ -35,7 +35,10 @@ private:
     QSlider size_max;
 
     static const QString LABEL_EXPR;
-
+    static const QString LABEL_SAMPLE_X;
+    static const QString LABEL_SAMPLE_Z;
+    static const QString LABEL_RANGE_MIN;
+    static const QString LABEL_RANGE_MAX;
 
 public:
     View(QWidget *parent = nullptr);
