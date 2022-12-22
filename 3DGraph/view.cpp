@@ -1,12 +1,13 @@
 #include "view.h"
-#include "classes/Constante.h"
-#include "classes/Addition.h"
-#include "classes/Multiplication.h"
 
 const QString View::LABEL_EXPR = QString::fromStdString("Expr = ");
 QString View::LABEL_AXE_X = QString::fromStdString("Axis X");
 QString View::LABEL_AXE_Y = QString::fromStdString("Axis Y");
 QString View::LABEL_AXE_Z = QString::fromStdString("Axis Z");
+const QString View::LABEL_SAMPLE_X = QString::fromStdString("Sample on X: ");
+const QString View::LABEL_SAMPLE_Z = QString::fromStdString("Sample on Z: ");
+const QString View::LABEL_RANGE_MIN = QString::fromStdString("Minimum range: ");
+const QString View::LABEL_RANGE_MAX = QString::fromStdString("Maximum range: ");
 
 
 View::View(QWidget *parent)
@@ -27,22 +28,22 @@ View::View(QWidget *parent)
     point_X.setMinimum(2);
     point_X.setMaximum(50);
     point_X.setTickInterval(1);
-    controls_layout.addWidget(&point_X);
+    controls_layout.addRow(View::LABEL_SAMPLE_X, &point_X);
 
     point_Z.setMinimum(2);
     point_Z.setMaximum(50);
     point_Z.setTickInterval(1);
-    controls_layout.addWidget(&point_Z);
+    controls_layout.addRow(View::LABEL_SAMPLE_Z, &point_Z);
 
     size_min.setMinimum(-50);
     size_min.setMaximum(0);
     size_min.setTickInterval(1);
-    controls_layout.addWidget(&size_min);
+    controls_layout.addRow(View::LABEL_RANGE_MIN, &size_min);
 
     size_max.setMinimum(0);
     size_max.setMaximum(50);
     size_max.setTickInterval(1);
-    controls_layout.addWidget(&size_max);
+    controls_layout.addRow(View::LABEL_RANGE_MAX, &size_max);
 
 
     base_layout.addWidget(graph_container, View::GRAPH_STRETCH);
