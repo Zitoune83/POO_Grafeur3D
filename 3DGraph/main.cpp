@@ -1,5 +1,7 @@
 #include "view.h"
 #include "model.h"
+#include "classes/Variable.h"
+#include "classes/Multiplication.h"
 #include <QApplication>
 
 void connect(Model& m, View& v)
@@ -17,7 +19,7 @@ void connect(Model& m, View& v)
     QObject::connect(size_min,&QSlider::sliderMoved,&m,&Model::setSampleMin);
     QObject::connect(size_max,&QSlider::sliderMoved,&m,&Model::setSampleMax);
 
-    m.setExpression();
+    //m.setExpression();
 }
 
 void connect(View& v, Model& m)
@@ -32,6 +34,15 @@ int main(int argc, char *argv[])
     Model m;
     View v;
     connect(m, v);
+
+    std::map<std::string, float> var_map = Variable::init();
+    Variable x("x", var_map, 0);
+    Variable z("z", var_map, 0);
+    Multiplication mul(&x, &x);
+    Multiplication e(&mul, &z);
+
+    m.setExpression(&e, &var_map);
+
 
     v.show();
     return a.exec();

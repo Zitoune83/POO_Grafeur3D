@@ -1,9 +1,6 @@
 #include "model.h"
 #include "classes/Variable.h"
-#include "classes/Constante.h"
-#include "classes/Addition.h"
 #include "classes/Multiplication.h"
-#include "classes/Division.h"
 #include <QtDataVisualization/Q3DSurface>
 #include <QtCore/qmath.h>
 
@@ -53,6 +50,29 @@ void Model::setExpression()
     feedGraph();
     QString text = QString::fromStdString(m_exp->toString());
     emit expressionUpdated(text);
+}
+
+void Model::setExpression(Expression* expr)
+{
+    this->m_exp = expr;
+    feedGraph();
+    QString text = QString::fromStdString(m_exp->toString());
+    emit expressionUpdated(text);
+}
+
+void Model::setExpression(std::map<std::string, float>* var_map)
+{
+    this->var_map = var_map;
+}
+
+void Model::setExpression(Expression* expr, std::map<std::string, float>* var_map)
+{
+    setExpression(var_map);
+    setExpression(expr);
+}
+void Model::setExpression(std::map<std::string, float>* var_map, Expression* expr)
+{
+    setExpression(expr, var_map);
 }
 
 QSurface3DSeries* Model::feedGraph(){

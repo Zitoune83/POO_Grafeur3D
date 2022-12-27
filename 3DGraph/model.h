@@ -25,6 +25,10 @@ public:
     ~Model();
 
     void setExpression();
+    void setExpression(Expression* expr);
+    void setExpression(std::map<std::string, float>* var_map);
+    void setExpression(Expression* expr, std::map<std::string, float>* var_map);
+    void setExpression(std::map<std::string, float>* var_map, Expression* expr);
     QSurface3DSeries* feedGraph();   //Fournit un tableau de points à l' object Q3Dsurface
 
 
